@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:lista_flutte/features/pokemon_cards/presentation/bloc/pokemon_card_bloc.dart';
 import 'package:lista_flutte/features/pokemon_cards/presentation/widgets/filter_drawer.dart';
 import 'package:lista_flutte/features/pokemon_cards/presentation/widgets/pokemon_card_list_item.dart';
@@ -21,6 +22,9 @@ class _CardsPageState extends State<CardsPage> {
   @override
   void initState() {
     super.initState();
+    // Remove splash screen once the first frame is rendered.
+    FlutterNativeSplash.remove();
+
     _scrollController.addListener(_onScroll);
     context.read<PokemonCardBloc>().add(const PokemonCardFetched(isRefresh: true));
 
