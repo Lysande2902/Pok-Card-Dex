@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lista_flutte/features/pokemon_cards/presentation/bloc/pokemon_card_bloc.dart';
 import 'package:lista_flutte/features/pokemon_cards/presentation/widgets/filter_drawer.dart';
-import 'package:lista_flutte/features/pokemon_cards/presentation/widgets/pokemon_card_list_item.dart'; // Asegúrate de que este archivo exista
+import 'package:lista_flutte/features/pokemon_cards/presentation/widgets/pokemon_card_list_item.dart';
+
+import '../widgets/skeleton_card_list_item.dart';
 
 class CardsPage extends StatefulWidget {
   const CardsPage({super.key});
@@ -88,8 +90,10 @@ class _CardsPageState extends State<CardsPage> {
       body: BlocBuilder<PokemonCardBloc, PokemonCardState>(
         builder: (context, state) {
           // Muestra el indicador de carga para el estado inicial y de carga principal.
-          if (state is PokemonCardInitial || (state is PokemonCardLoading && state.cards.isEmpty)) {
-            return const Center(child: CircularProgressIndicator());
+          if (state is PokemonCardInitial ||
+              (state is PokemonCardLoading && state.cards.isEmpty)) {
+            return ListView.builder(
+                itemCount: 10, itemBuilder: (context, index) => const SkeletonCardListItem());
           }
           if (state is PokemonCardError) {
             return Center(
@@ -109,7 +113,15 @@ class _CardsPageState extends State<CardsPage> {
             final cards = state.cards;
 
             if (state.cards.isEmpty) {
-              return const Center(child: Text('No se encontraron cartas.'));
+              return const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.search_off, size: 64, color: Colors.grey),
+                      SizedBox(height: 16),
+                      Text('No se encontraron cartas.')
+                    ],
+              ));
             }
 
             return RefreshIndicator(
