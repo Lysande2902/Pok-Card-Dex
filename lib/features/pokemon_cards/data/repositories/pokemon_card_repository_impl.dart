@@ -4,11 +4,17 @@ import 'package:lista_flutte/features/pokemon_cards/domain/repositories/pokemon_
 
 class PokemonCardRepositoryImpl implements PokemonCardRepository {
   final PokemonCardRemoteDataSource remoteDataSource;
+
   PokemonCardRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<List<PokemonCard>> getCards(int page, int pageSize) async {
-    final models = await remoteDataSource.getCards(page, pageSize);
-    return models.map((m) => m.toEntity()).toList();
+  Future<List<PokemonCard>> getCards({
+    required int page,
+    required int pageSize,
+    String? query,
+    Set<String> types = const {},
+  }) async {
+    final cardModels = await remoteDataSource.getCards(page, pageSize, query, types);
+    return cardModels.map((model) => model.toEntity()).toList();
   }
 }

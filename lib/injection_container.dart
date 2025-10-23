@@ -15,8 +15,8 @@ Future<void> init() async {
   sl.registerLazySingleton<Dio>(() {
     final options = BaseOptions(
       baseUrl: 'https://api.pokemontcg.io/v2',
-      connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 30),
+      connectTimeout: const Duration(seconds: 15), // 15 segundos para conectar
+      receiveTimeout: const Duration(seconds: 15), // 15 segundos para recibir respuesta
       headers: {
         'Accept': 'application/json',
         if (kPokemonTcgApiKey.isNotEmpty) 'X-Api-Key': kPokemonTcgApiKey,

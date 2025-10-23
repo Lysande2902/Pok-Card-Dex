@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lista_flutte/features/pokemon_cards/domain/entities/pokemon_card.dart';
-import 'package:lista_flutte/features/pokemon_cards/presentation/pages/pokemon_card_detail_page.dart';
 
 class PokemonCardListItem extends StatelessWidget {
   const PokemonCardListItem({super.key, required this.card});
@@ -13,7 +13,7 @@ class PokemonCardListItem extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(PokemonCardDetailPage.route(card: card));
+        context.push('/card/${card.id}', extra: card);
       },
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

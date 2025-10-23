@@ -3,9 +3,16 @@ import 'package:lista_flutte/features/pokemon_cards/domain/repositories/pokemon_
 
 class GetPokemonCards {
   final PokemonCardRepository repository;
+
   GetPokemonCards(this.repository);
 
-  Future<List<PokemonCard>> call(int page, int pageSize) {
-    return repository.getCards(page, pageSize);
+  Future<List<PokemonCard>> call({
+    required int page,
+    required int pageSize,
+    String? query,
+    Set<String> types = const {},
+  }) {
+    return repository.getCards(
+        page: page, pageSize: pageSize, query: query, types: types);
   }
 }

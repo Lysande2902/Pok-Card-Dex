@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "PokéCard Dex",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--dart-define=POKEMON_TCG_API_KEY=c05520c7-8a56-45a7-9feb-b48561ab3f0c"
+            ]
+        }
+    ]
+}

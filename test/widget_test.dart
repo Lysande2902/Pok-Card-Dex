@@ -5,26 +5,24 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:lista_flutte/main.dart';
+import 'package:lista_flutte/injection_container.dart' as di;
+import 'package:lista_flutte/main.dart'; // Import MyApp
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  // This test group ensures that dependencies are set up for widget tests.
+  group('App Startup', () {
+    setUpAll(() async {
+      // Initialize dependencies before running any widget tests
+      await di.init();
+    });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    testWidgets('App builds and displays initial page with title', (WidgetTester tester) async {
+      // Build our app and trigger a frame.
+      await tester.pumpWidget(const MyApp());
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      // Verify that the initial page shows the correct AppBar title.
+      expect(find.text('PokéCard Dex'), findsOneWidget);
+    });
   });
 }
